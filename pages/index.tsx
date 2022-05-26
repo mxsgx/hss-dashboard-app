@@ -205,9 +205,9 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
       </Head>
 
       <div className="text-stone-50 flex flex-col space-y-4">
-        <header className="flex flex-row justify-between justify-items-center pb-2 px-4 border-b-2 border-disabled-button">
-          <div className="flex flex-row items-center space-x-4">
-            <Image src={logo} alt="Holywings" priority={true} />
+        <header className="flex flex-row justify-between justify-items-center pb-2 px-4 border-b-2 border-disabled-button space-x-4">
+          <div className="relative h-24 w-36">
+            <Image src={logo} alt="Holywings" priority={true} layout="fill" />
           </div>
           <div className="flex items-center">
             <span className="mr-1">Hello {user.firstName},</span>
@@ -223,7 +223,7 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
         </header>
         <main>
           <div className="flex flex-col space-y-4 px-4">
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row justify-between items-center">
               <div>
                 <h3 className="text-xl font-medium text-stone-100 md:mb-2">
                   Ticket Purchased
@@ -246,7 +246,8 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
                   type="number"
                   pattern="^8([0-9]+)"
                   id="search"
-                  className="bg-stone-700 text-stone-300 py-3 px-2 -ml-1 text-sm w-52 border border-stone-700 outline-none rounded-r-md"
+                  min={8}
+                  className="bg-stone-700 text-stone-300 py-3 px-2 -ml-1 text-sm border w-full border-stone-700 outline-none rounded-r-md"
                   placeholder="8xxx"
                   value={search}
                   onChange={handleSearchInput}

@@ -1,0 +1,7352 @@
+#
+directive @dateFormat(value: String!) on FIELD_DEFINITION
+
+#
+directive @symbol(value: String!) on FIELD_DEFINITION
+
+#
+directive @precision(value: Float!) on FIELD_DEFINITION
+
+# Controls the rate of traffic.
+directive @rateLimit(
+  # Number of occurrences allowed over duration.
+  limit: Int! = 60
+
+  # Number of seconds before limit is reset.
+  duration: Int! = 60
+) on OBJECT | FIELD_DEFINITION
+
+#
+type Query {
+  #
+  default: String
+
+  #
+  pushNotifications(
+    query: JSON
+    where: PushNotificationFilter
+    or: [PushNotificationFilter]
+    orderBy: PushNotificationOrderBy
+    skip: Int
+    limit: Int
+  ): [PushNotification]
+
+  #
+  pushNotification(id: String!): PushNotification
+
+  #
+  pushNotificationsConnection(
+    query: JSON
+    where: PushNotificationFilter
+    or: [PushNotificationFilter]
+    orderBy: PushNotificationOrderBy
+    skip: Int
+    limit: Int
+  ): PushNotificationConnection
+
+  #
+  pushNotificationSegments(
+    limit: Int
+    offset: Int
+  ): PushNotificationSegmentConnection
+
+  #
+  pushNotificationDevices(
+    limit: Int
+    offset: Int
+  ): PushNotificationDeviceConnection
+
+  #
+  users(
+    query: JSON
+    where: UserFilter
+    or: [UserFilter]
+    limit: Int
+    skip: Int
+    orderBy: UserOrderBy
+  ): [User]
+
+  #
+  user(id: String): User
+
+  #
+  usersConnection(
+    query: JSON
+    where: UserFilter
+    or: [UserFilter]
+    limit: Int
+    skip: Int
+    orderBy: UserOrderBy
+  ): UsersConnection
+
+  #
+  caches: [Cache]
+
+  #
+  cache(key: String): Cache
+
+  #
+  cachesConnection(query: JSON, limit: Int, skip: Int): CachesConnection
+
+  #
+  livestreams(
+    query: JSON
+    where: LivestreamFilter
+    or: [LivestreamFilter]
+    orderBy: LivestreamOrderBy
+    skip: Int
+    limit: Int
+  ): [Livestream]
+
+  #
+  livestream(id: String!): Livestream
+
+  #
+  livestreamsConnection(
+    query: JSON
+    where: LivestreamFilter
+    or: [LivestreamFilter]
+    orderBy: LivestreamOrderBy
+    skip: Int
+    limit: Int
+  ): LivestreamConnection
+
+  #
+  payments(
+    query: JSON
+    where: PaymentFilter
+    or: [PaymentFilter]
+    orderBy: PaymentOrderBy
+    skip: Int
+    limit: Int
+  ): [Payment]
+
+  #
+  payment(id: String!): Payment
+
+  #
+  paymentsConnection(
+    query: JSON
+    where: PaymentFilter
+    or: [PaymentFilter]
+    orderBy: PaymentOrderBy
+    skip: Int
+    limit: Int
+  ): PaymentConnection
+
+  #
+  purchases(
+    query: JSON
+    where: PurchaseFilter
+    or: [PurchaseFilter]
+    orderBy: PurchaseOrderBy
+    skip: Int
+    limit: Int
+  ): [Purchase]
+
+  #
+  purchase(id: String!): Purchase
+
+  #
+  purchasesConnection(
+    query: JSON
+    where: PurchaseFilter
+    or: [PurchaseFilter]
+    orderBy: PurchaseOrderBy
+    skip: Int
+    limit: Int
+  ): PurchaseConnection
+
+  #
+  personalProfiles(
+    query: JSON
+    where: PersonalProfileFilter
+    or: [PersonalProfileFilter]
+    orderBy: PersonalProfileOrderBy
+    skip: Int
+    limit: Int
+  ): [PersonalProfile]
+
+  #
+  personalProfile(id: String!): PersonalProfile
+
+  #
+  personalProfilesConnection(
+    query: JSON
+    where: PersonalProfileFilter
+    or: [PersonalProfileFilter]
+    orderBy: PersonalProfileOrderBy
+    skip: Int
+    limit: Int
+  ): PersonalProfileConnection
+
+  #
+  events(
+    query: JSON
+    where: EventFilter
+    or: [EventFilter]
+    orderBy: EventOrderBy
+    skip: Int
+    limit: Int
+  ): [Event]
+
+  #
+  event(id: String!): Event
+
+  #
+  eventsConnection(
+    query: JSON
+    where: EventFilter
+    or: [EventFilter]
+    orderBy: EventOrderBy
+    skip: Int
+    limit: Int
+  ): EventConnection
+
+  #
+  athletes(
+    query: JSON
+    where: AthleteFilter
+    or: [AthleteFilter]
+    orderBy: AthleteOrderBy
+    skip: Int
+    limit: Int
+  ): [Athlete]
+
+  #
+  athlete(id: String!): Athlete
+
+  #
+  athletesConnection(
+    query: JSON
+    where: AthleteFilter
+    or: [AthleteFilter]
+    orderBy: AthleteOrderBy
+    skip: Int
+    limit: Int
+  ): AthleteConnection
+
+  #
+  athleteEvents(
+    query: JSON
+    where: AthleteEventFilter
+    or: [AthleteEventFilter]
+    orderBy: AthleteEventOrderBy
+    skip: Int
+    limit: Int
+  ): [AthleteEvent]
+
+  #
+  athleteEvent(id: String!): AthleteEvent
+
+  #
+  athleteEventsConnection(
+    query: JSON
+    where: AthleteEventFilter
+    or: [AthleteEventFilter]
+    orderBy: AthleteEventOrderBy
+    skip: Int
+    limit: Int
+  ): AthleteEventConnection
+}
+
+# The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+#
+input PushNotificationFilter {
+  #
+  playerId: Int
+
+  #
+  playerId_not: Int
+
+  #
+  playerId_in: [Int]
+
+  #
+  playerId_not_in: [Int]
+
+  #
+  playerId_lt: Int
+
+  #
+  playerId_lte: Int
+
+  #
+  playerId_gt: Int
+
+  #
+  playerId_gte: Int
+
+  #
+  playerId_contains: Int
+
+  #
+  playerId_not_contains: Int
+
+  #
+  playerId_starts_with: Int
+
+  #
+  playerId_not_starts_with: Int
+
+  #
+  playerId_ends_with: Int
+
+  #
+  playerId_not_ends_with: Int
+
+  #
+  user: UserFilter
+
+  #
+  userId: String
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+#
+input UserFilter {
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  firstName: String
+
+  #
+  firstName_not: String
+
+  #
+  firstName_in: [String]
+
+  #
+  firstName_not_in: [String]
+
+  #
+  firstName_lt: String
+
+  #
+  firstName_lte: String
+
+  #
+  firstName_gt: String
+
+  #
+  firstName_gte: String
+
+  #
+  firstName_contains: String
+
+  #
+  firstName_not_contains: String
+
+  #
+  firstName_starts_with: String
+
+  #
+  firstName_not_starts_with: String
+
+  #
+  firstName_ends_with: String
+
+  #
+  firstName_not_ends_with: String
+
+  #
+  lastName: String
+
+  #
+  lastName_not: String
+
+  #
+  lastName_in: [String]
+
+  #
+  lastName_not_in: [String]
+
+  #
+  lastName_lt: String
+
+  #
+  lastName_lte: String
+
+  #
+  lastName_gt: String
+
+  #
+  lastName_gte: String
+
+  #
+  lastName_contains: String
+
+  #
+  lastName_not_contains: String
+
+  #
+  lastName_starts_with: String
+
+  #
+  lastName_not_starts_with: String
+
+  #
+  lastName_ends_with: String
+
+  #
+  lastName_not_ends_with: String
+
+  #
+  email: EmailAddress
+
+  #
+  email_not: EmailAddress
+
+  #
+  email_in: [EmailAddress]
+
+  #
+  email_not_in: [EmailAddress]
+
+  #
+  email_lt: EmailAddress
+
+  #
+  email_lte: EmailAddress
+
+  #
+  email_gt: EmailAddress
+
+  #
+  email_gte: EmailAddress
+
+  #
+  email_contains: EmailAddress
+
+  #
+  email_not_contains: EmailAddress
+
+  #
+  email_starts_with: EmailAddress
+
+  #
+  email_not_starts_with: EmailAddress
+
+  #
+  email_ends_with: EmailAddress
+
+  #
+  email_not_ends_with: EmailAddress
+
+  #
+  phoneNumber: PhoneNumber
+
+  #
+  phoneNumber_not: PhoneNumber
+
+  #
+  phoneNumber_in: [PhoneNumber]
+
+  #
+  phoneNumber_not_in: [PhoneNumber]
+
+  #
+  phoneNumber_lt: PhoneNumber
+
+  #
+  phoneNumber_lte: PhoneNumber
+
+  #
+  phoneNumber_gt: PhoneNumber
+
+  #
+  phoneNumber_gte: PhoneNumber
+
+  #
+  phoneNumber_contains: PhoneNumber
+
+  #
+  phoneNumber_not_contains: PhoneNumber
+
+  #
+  phoneNumber_starts_with: PhoneNumber
+
+  #
+  phoneNumber_not_starts_with: PhoneNumber
+
+  #
+  phoneNumber_ends_with: PhoneNumber
+
+  #
+  phoneNumber_not_ends_with: PhoneNumber
+
+  #
+  verify: Int
+
+  #
+  verify_not: Int
+
+  #
+  verify_in: [Int]
+
+  #
+  verify_not_in: [Int]
+
+  #
+  verify_lt: Int
+
+  #
+  verify_lte: Int
+
+  #
+  verify_gt: Int
+
+  #
+  verify_gte: Int
+
+  #
+  verify_contains: Int
+
+  #
+  verify_not_contains: Int
+
+  #
+  verify_starts_with: Int
+
+  #
+  verify_not_starts_with: Int
+
+  #
+  verify_ends_with: Int
+
+  #
+  verify_not_ends_with: Int
+
+  #
+  role: Role
+
+  #
+  role_not: Role
+
+  #
+  role_in: [Role]
+
+  #
+  role_not_in: [Role]
+
+  #
+  role_lt: Role
+
+  #
+  role_lte: Role
+
+  #
+  role_gt: Role
+
+  #
+  role_gte: Role
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+
+  #
+  peertube: Text
+
+  #
+  peertube_not: Text
+
+  #
+  peertube_in: [Text]
+
+  #
+  peertube_not_in: [Text]
+
+  #
+  peertube_lt: Text
+
+  #
+  peertube_lte: Text
+
+  #
+  peertube_gt: Text
+
+  #
+  peertube_gte: Text
+
+  #
+  peertube_contains: Text
+
+  #
+  peertube_not_contains: Text
+
+  #
+  peertube_starts_with: Text
+
+  #
+  peertube_not_starts_with: Text
+
+  #
+  peertube_ends_with: Text
+
+  #
+  peertube_not_ends_with: Text
+
+  #
+  peertubeToken: Text
+
+  #
+  peertubeToken_not: Text
+
+  #
+  peertubeToken_in: [Text]
+
+  #
+  peertubeToken_not_in: [Text]
+
+  #
+  peertubeToken_lt: Text
+
+  #
+  peertubeToken_lte: Text
+
+  #
+  peertubeToken_gt: Text
+
+  #
+  peertubeToken_gte: Text
+
+  #
+  peertubeToken_contains: Text
+
+  #
+  peertubeToken_not_contains: Text
+
+  #
+  peertubeToken_starts_with: Text
+
+  #
+  peertubeToken_not_starts_with: Text
+
+  #
+  peertubeToken_ends_with: Text
+
+  #
+  peertubeToken_not_ends_with: Text
+}
+
+# A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+scalar EmailAddress
+
+# A field whose value conforms to the standard E.164 format as specified in: https://en.wikipedia.org/wiki/E.164. Basically this is +17895551234.
+scalar PhoneNumber
+
+#
+enum Role {
+  #
+  ADMIN
+
+  #
+  AUTHENTICATED
+}
+
+#
+scalar DateTime
+
+# A long text field that can span multiple lines.
+scalar Text
+
+#
+enum PushNotificationOrderBy {
+  #
+  playerId_ASC
+
+  #
+  playerId_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type PushNotification {
+  #
+  id: String
+
+  #
+  playerId: String
+
+  #
+  user: User
+}
+
+#
+type User {
+  #
+  id: String!
+
+  #
+  firstName: String
+
+  #
+  lastName: String
+
+  #
+  email: EmailAddress
+
+  #
+  phoneNumber: PhoneNumber
+
+  #
+  verify: Int
+
+  #
+  role: Role
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  peertube: Text
+
+  #
+  peertubeToken: Text
+}
+
+#
+type PushNotificationConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [PushNotification]
+}
+
+#
+type PushNotificationSegmentConnection {
+  #
+  total_count: Int
+
+  #
+  offset: Int
+
+  #
+  limit: Int
+
+  #
+  segments: [PushNotificationSegment]
+}
+
+#
+type PushNotificationSegment {
+  #
+  id: String
+
+  #
+  name: String
+
+  #
+  created_at: Date
+
+  #
+  updated_at: Date
+
+  #
+  app_id: String
+
+  #
+  read_only: Boolean
+
+  #
+  is_active: Boolean
+}
+
+# Date custom scalar type
+scalar Date
+
+#
+type PushNotificationDeviceConnection {
+  #
+  total_count: Int
+
+  #
+  offset: Int
+
+  #
+  limit: Int
+
+  #
+  players: [PushNotificationDevice]
+}
+
+#
+type PushNotificationDevice {
+  #
+  id: String
+
+  #
+  app_id: String
+
+  #
+  tags: JSON
+
+  #
+  identifier: String
+
+  #
+  identifier_auth_hash: String
+
+  #
+  language: String
+
+  #
+  timezone: Int
+
+  #
+  game_version: String
+
+  #
+  device_model: String
+
+  #
+  device_os: String
+
+  #
+  ad_id: String
+
+  #
+  sdk: String
+
+  #
+  session_count: Int
+
+  #
+  amount_spent: String
+
+  #
+  created_at: Int
+
+  #
+  playtime: Int
+
+  #
+  badge_count: Int
+
+  #
+  last_active: Int
+
+  #
+  notification_types: Int
+
+  #
+  test_type: Int
+
+  #
+  long: Float
+
+  #
+  lat: Float
+
+  #
+  country: String
+
+  #
+  external_user_id: String
+
+  #
+  external_user_id_auth_hash: String
+}
+
+#
+enum UserOrderBy {
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  firstName_ASC
+
+  #
+  firstName_DESC
+
+  #
+  lastName_ASC
+
+  #
+  lastName_DESC
+
+  #
+  email_ASC
+
+  #
+  email_DESC
+
+  #
+  phoneNumber_ASC
+
+  #
+  phoneNumber_DESC
+
+  #
+  verify_ASC
+
+  #
+  verify_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+
+  #
+  peertube_ASC
+
+  #
+  peertube_DESC
+
+  #
+  peertubeToken_ASC
+
+  #
+  peertubeToken_DESC
+}
+
+#
+type UsersConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [User]
+}
+
+#
+type Cache {
+  #
+  key: String!
+
+  #
+  name: String
+
+  #
+  data: Object
+
+  #
+  query: String
+
+  #
+  createdAt: DateTime
+
+  #
+  expired: Int
+}
+
+# The `Object` scalar type represents Object values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar Object
+
+#
+type CachesConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [Cache]
+}
+
+#
+input LivestreamFilter {
+  #
+  title: String
+
+  #
+  title_not: String
+
+  #
+  title_in: [String]
+
+  #
+  title_not_in: [String]
+
+  #
+  title_lt: String
+
+  #
+  title_lte: String
+
+  #
+  title_gt: String
+
+  #
+  title_gte: String
+
+  #
+  title_contains: String
+
+  #
+  title_not_contains: String
+
+  #
+  title_starts_with: String
+
+  #
+  title_not_starts_with: String
+
+  #
+  title_ends_with: String
+
+  #
+  title_not_ends_with: String
+
+  #
+  liveAt: DateTime
+
+  #
+  liveAt_not: DateTime
+
+  #
+  liveAt_in: [DateTime]
+
+  #
+  liveAt_not_in: [DateTime]
+
+  #
+  liveAt_lt: DateTime
+
+  #
+  liveAt_lte: DateTime
+
+  #
+  liveAt_gt: DateTime
+
+  #
+  liveAt_gte: DateTime
+
+  #
+  liveAt_contains: DateTime
+
+  #
+  liveAt_not_contains: DateTime
+
+  #
+  liveAt_starts_with: DateTime
+
+  #
+  liveAt_not_starts_with: DateTime
+
+  #
+  liveAt_ends_with: DateTime
+
+  #
+  liveAt_not_ends_with: DateTime
+
+  #
+  status: LivestreamStatus
+
+  #
+  status_not: LivestreamStatus
+
+  #
+  status_in: [LivestreamStatus]
+
+  #
+  status_not_in: [LivestreamStatus]
+
+  #
+  status_lt: LivestreamStatus
+
+  #
+  status_lte: LivestreamStatus
+
+  #
+  status_gt: LivestreamStatus
+
+  #
+  status_gte: LivestreamStatus
+
+  #
+  description: RichText
+
+  #
+  description_not: RichText
+
+  #
+  description_in: [RichText]
+
+  #
+  description_not_in: [RichText]
+
+  #
+  description_lt: RichText
+
+  #
+  description_lte: RichText
+
+  #
+  description_gt: RichText
+
+  #
+  description_gte: RichText
+
+  #
+  description_contains: RichText
+
+  #
+  description_not_contains: RichText
+
+  #
+  description_starts_with: RichText
+
+  #
+  description_not_starts_with: RichText
+
+  #
+  description_ends_with: RichText
+
+  #
+  description_not_ends_with: RichText
+
+  #
+  summary: String
+
+  #
+  summary_not: String
+
+  #
+  summary_in: [String]
+
+  #
+  summary_not_in: [String]
+
+  #
+  summary_lt: String
+
+  #
+  summary_lte: String
+
+  #
+  summary_gt: String
+
+  #
+  summary_gte: String
+
+  #
+  summary_contains: String
+
+  #
+  summary_not_contains: String
+
+  #
+  summary_starts_with: String
+
+  #
+  summary_not_starts_with: String
+
+  #
+  summary_ends_with: String
+
+  #
+  summary_not_ends_with: String
+
+  #
+  price: Float
+
+  #
+  price_not: Float
+
+  #
+  price_in: [Float]
+
+  #
+  price_not_in: [Float]
+
+  #
+  price_lt: Float
+
+  #
+  price_lte: Float
+
+  #
+  price_gt: Float
+
+  #
+  price_gte: Float
+
+  #
+  price_contains: Float
+
+  #
+  price_not_contains: Float
+
+  #
+  price_starts_with: Float
+
+  #
+  price_not_starts_with: Float
+
+  #
+  price_ends_with: Float
+
+  #
+  price_not_ends_with: Float
+
+  #
+  embedUrl: String
+
+  #
+  embedUrl_not: String
+
+  #
+  embedUrl_in: [String]
+
+  #
+  embedUrl_not_in: [String]
+
+  #
+  embedUrl_lt: String
+
+  #
+  embedUrl_lte: String
+
+  #
+  embedUrl_gt: String
+
+  #
+  embedUrl_gte: String
+
+  #
+  embedUrl_contains: String
+
+  #
+  embedUrl_not_contains: String
+
+  #
+  embedUrl_starts_with: String
+
+  #
+  embedUrl_not_starts_with: String
+
+  #
+  embedUrl_ends_with: String
+
+  #
+  embedUrl_not_ends_with: String
+
+  #
+  image: FileURL
+
+  #
+  image_not: FileURL
+
+  #
+  image_in: [FileURL]
+
+  #
+  image_not_in: [FileURL]
+
+  #
+  image_lt: FileURL
+
+  #
+  image_lte: FileURL
+
+  #
+  image_gt: FileURL
+
+  #
+  image_gte: FileURL
+
+  #
+  image_contains: FileURL
+
+  #
+  image_not_contains: FileURL
+
+  #
+  image_starts_with: FileURL
+
+  #
+  image_not_starts_with: FileURL
+
+  #
+  image_ends_with: FileURL
+
+  #
+  image_not_ends_with: FileURL
+
+  #
+  videoId: String
+
+  #
+  videoId_not: String
+
+  #
+  videoId_in: [String]
+
+  #
+  videoId_not_in: [String]
+
+  #
+  videoId_lt: String
+
+  #
+  videoId_lte: String
+
+  #
+  videoId_gt: String
+
+  #
+  videoId_gte: String
+
+  #
+  videoId_contains: String
+
+  #
+  videoId_not_contains: String
+
+  #
+  videoId_starts_with: String
+
+  #
+  videoId_not_starts_with: String
+
+  #
+  videoId_ends_with: String
+
+  #
+  videoId_not_ends_with: String
+
+  #
+  limit: Int
+
+  #
+  limit_not: Int
+
+  #
+  limit_in: [Int]
+
+  #
+  limit_not_in: [Int]
+
+  #
+  limit_lt: Int
+
+  #
+  limit_lte: Int
+
+  #
+  limit_gt: Int
+
+  #
+  limit_gte: Int
+
+  #
+  limit_contains: Int
+
+  #
+  limit_not_contains: Int
+
+  #
+  limit_starts_with: Int
+
+  #
+  limit_not_starts_with: Int
+
+  #
+  limit_ends_with: Int
+
+  #
+  limit_not_ends_with: Int
+
+  #
+  embedLiveChat: String
+
+  #
+  embedLiveChat_not: String
+
+  #
+  embedLiveChat_in: [String]
+
+  #
+  embedLiveChat_not_in: [String]
+
+  #
+  embedLiveChat_lt: String
+
+  #
+  embedLiveChat_lte: String
+
+  #
+  embedLiveChat_gt: String
+
+  #
+  embedLiveChat_gte: String
+
+  #
+  embedLiveChat_contains: String
+
+  #
+  embedLiveChat_not_contains: String
+
+  #
+  embedLiveChat_starts_with: String
+
+  #
+  embedLiveChat_not_starts_with: String
+
+  #
+  embedLiveChat_ends_with: String
+
+  #
+  embedLiveChat_not_ends_with: String
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+#
+enum LivestreamStatus {
+  #
+  SCHEDULED
+
+  #
+  LIVE
+
+  #
+  ENDED
+}
+
+# A rich text field that can span multiple lines.
+scalar RichText
+
+# A field whose value conforms to the standard url format as specified in: https://www.w3.org/TR/url/.
+scalar FileURL
+
+#
+enum LivestreamOrderBy {
+  #
+  title_ASC
+
+  #
+  title_DESC
+
+  #
+  liveAt_ASC
+
+  #
+  liveAt_DESC
+
+  #
+  description_ASC
+
+  #
+  description_DESC
+
+  #
+  summary_ASC
+
+  #
+  summary_DESC
+
+  #
+  price_ASC
+
+  #
+  price_DESC
+
+  #
+  embedUrl_ASC
+
+  #
+  embedUrl_DESC
+
+  #
+  image_ASC
+
+  #
+  image_DESC
+
+  #
+  videoId_ASC
+
+  #
+  videoId_DESC
+
+  #
+  limit_ASC
+
+  #
+  limit_DESC
+
+  #
+  embedLiveChat_ASC
+
+  #
+  embedLiveChat_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type Livestream {
+  #
+  title: String
+
+  #
+  liveAt: DateTime
+
+  #
+  status: LivestreamStatus
+
+  #
+  description: RichText
+
+  #
+  summary: String
+
+  #
+  price: Float
+
+  #
+  embedUrl: String
+
+  #
+  image: FileURL
+
+  #
+  videoId: String
+
+  #
+  limit: Int
+
+  #
+  embedLiveChat: String
+
+  #
+  id: String
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+}
+
+#
+type LivestreamConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [Livestream]
+}
+
+#
+input PaymentFilter {
+  #
+  invoiceId: String
+
+  #
+  invoiceId_not: String
+
+  #
+  invoiceId_in: [String]
+
+  #
+  invoiceId_not_in: [String]
+
+  #
+  invoiceId_lt: String
+
+  #
+  invoiceId_lte: String
+
+  #
+  invoiceId_gt: String
+
+  #
+  invoiceId_gte: String
+
+  #
+  invoiceId_contains: String
+
+  #
+  invoiceId_not_contains: String
+
+  #
+  invoiceId_starts_with: String
+
+  #
+  invoiceId_not_starts_with: String
+
+  #
+  invoiceId_ends_with: String
+
+  #
+  invoiceId_not_ends_with: String
+
+  #
+  invoiceUrl: URL
+
+  #
+  invoiceUrl_not: URL
+
+  #
+  invoiceUrl_in: [URL]
+
+  #
+  invoiceUrl_not_in: [URL]
+
+  #
+  invoiceUrl_lt: URL
+
+  #
+  invoiceUrl_lte: URL
+
+  #
+  invoiceUrl_gt: URL
+
+  #
+  invoiceUrl_gte: URL
+
+  #
+  invoiceUrl_contains: URL
+
+  #
+  invoiceUrl_not_contains: URL
+
+  #
+  invoiceUrl_starts_with: URL
+
+  #
+  invoiceUrl_not_starts_with: URL
+
+  #
+  invoiceUrl_ends_with: URL
+
+  #
+  invoiceUrl_not_ends_with: URL
+
+  #
+  expiredAt: DateTime
+
+  #
+  expiredAt_not: DateTime
+
+  #
+  expiredAt_in: [DateTime]
+
+  #
+  expiredAt_not_in: [DateTime]
+
+  #
+  expiredAt_lt: DateTime
+
+  #
+  expiredAt_lte: DateTime
+
+  #
+  expiredAt_gt: DateTime
+
+  #
+  expiredAt_gte: DateTime
+
+  #
+  expiredAt_contains: DateTime
+
+  #
+  expiredAt_not_contains: DateTime
+
+  #
+  expiredAt_starts_with: DateTime
+
+  #
+  expiredAt_not_starts_with: DateTime
+
+  #
+  expiredAt_ends_with: DateTime
+
+  #
+  expiredAt_not_ends_with: DateTime
+
+  #
+  snapshot: Text
+
+  #
+  snapshot_not: Text
+
+  #
+  snapshot_in: [Text]
+
+  #
+  snapshot_not_in: [Text]
+
+  #
+  snapshot_lt: Text
+
+  #
+  snapshot_lte: Text
+
+  #
+  snapshot_gt: Text
+
+  #
+  snapshot_gte: Text
+
+  #
+  snapshot_contains: Text
+
+  #
+  snapshot_not_contains: Text
+
+  #
+  snapshot_starts_with: Text
+
+  #
+  snapshot_not_starts_with: Text
+
+  #
+  snapshot_ends_with: Text
+
+  #
+  snapshot_not_ends_with: Text
+
+  #
+  externalId: String
+
+  #
+  externalId_not: String
+
+  #
+  externalId_in: [String]
+
+  #
+  externalId_not_in: [String]
+
+  #
+  externalId_lt: String
+
+  #
+  externalId_lte: String
+
+  #
+  externalId_gt: String
+
+  #
+  externalId_gte: String
+
+  #
+  externalId_contains: String
+
+  #
+  externalId_not_contains: String
+
+  #
+  externalId_starts_with: String
+
+  #
+  externalId_not_starts_with: String
+
+  #
+  externalId_ends_with: String
+
+  #
+  externalId_not_ends_with: String
+
+  #
+  user: UserFilter
+
+  #
+  userId: String
+
+  #
+  status: PaymentStatus
+
+  #
+  status_not: PaymentStatus
+
+  #
+  status_in: [PaymentStatus]
+
+  #
+  status_not_in: [PaymentStatus]
+
+  #
+  status_lt: PaymentStatus
+
+  #
+  status_lte: PaymentStatus
+
+  #
+  status_gt: PaymentStatus
+
+  #
+  status_gte: PaymentStatus
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+# A field whose value conforms to the standard url format as specified in: https://www.w3.org/TR/url/.
+scalar URL
+
+#
+enum PaymentStatus {
+  #
+  UNPAID
+
+  #
+  EXPIRED
+
+  #
+  PAID
+}
+
+#
+enum PaymentOrderBy {
+  #
+  invoiceId_ASC
+
+  #
+  invoiceId_DESC
+
+  #
+  invoiceUrl_ASC
+
+  #
+  invoiceUrl_DESC
+
+  #
+  expiredAt_ASC
+
+  #
+  expiredAt_DESC
+
+  #
+  snapshot_ASC
+
+  #
+  snapshot_DESC
+
+  #
+  externalId_ASC
+
+  #
+  externalId_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type Payment {
+  #
+  invoiceId: String
+
+  #
+  invoiceUrl: URL
+
+  #
+  expiredAt: DateTime
+
+  #
+  snapshot: Text
+
+  #
+  externalId: String
+
+  #
+  user: User
+
+  #
+  status: PaymentStatus
+
+  #
+  id: String
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+}
+
+#
+type PaymentConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [Payment]
+}
+
+#
+input PurchaseFilter {
+  #
+  livestream: LivestreamFilter
+
+  #
+  livestreamId: String
+
+  #
+  purchasedBy: UserFilter
+
+  #
+  purchasedById: String
+
+  #
+  snapshot: Text
+
+  #
+  snapshot_not: Text
+
+  #
+  snapshot_in: [Text]
+
+  #
+  snapshot_not_in: [Text]
+
+  #
+  snapshot_lt: Text
+
+  #
+  snapshot_lte: Text
+
+  #
+  snapshot_gt: Text
+
+  #
+  snapshot_gte: Text
+
+  #
+  snapshot_contains: Text
+
+  #
+  snapshot_not_contains: Text
+
+  #
+  snapshot_starts_with: Text
+
+  #
+  snapshot_not_starts_with: Text
+
+  #
+  snapshot_ends_with: Text
+
+  #
+  snapshot_not_ends_with: Text
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+#
+enum PurchaseOrderBy {
+  #
+  snapshot_ASC
+
+  #
+  snapshot_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type Purchase {
+  #
+  livestream: Livestream
+
+  #
+  purchasedBy: User
+
+  #
+  snapshot: Text
+
+  #
+  id: String
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+}
+
+#
+type PurchaseConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [Purchase]
+}
+
+#
+input PersonalProfileFilter {
+  #
+  name: String
+
+  #
+  name_not: String
+
+  #
+  name_in: [String]
+
+  #
+  name_not_in: [String]
+
+  #
+  name_lt: String
+
+  #
+  name_lte: String
+
+  #
+  name_gt: String
+
+  #
+  name_gte: String
+
+  #
+  name_contains: String
+
+  #
+  name_not_contains: String
+
+  #
+  name_starts_with: String
+
+  #
+  name_not_starts_with: String
+
+  #
+  name_ends_with: String
+
+  #
+  name_not_ends_with: String
+
+  #
+  akaName: String
+
+  #
+  akaName_not: String
+
+  #
+  akaName_in: [String]
+
+  #
+  akaName_not_in: [String]
+
+  #
+  akaName_lt: String
+
+  #
+  akaName_lte: String
+
+  #
+  akaName_gt: String
+
+  #
+  akaName_gte: String
+
+  #
+  akaName_contains: String
+
+  #
+  akaName_not_contains: String
+
+  #
+  akaName_starts_with: String
+
+  #
+  akaName_not_starts_with: String
+
+  #
+  akaName_ends_with: String
+
+  #
+  akaName_not_ends_with: String
+
+  #
+  age: Int
+
+  #
+  age_not: Int
+
+  #
+  age_in: [Int]
+
+  #
+  age_not_in: [Int]
+
+  #
+  age_lt: Int
+
+  #
+  age_lte: Int
+
+  #
+  age_gt: Int
+
+  #
+  age_gte: Int
+
+  #
+  age_contains: Int
+
+  #
+  age_not_contains: Int
+
+  #
+  age_starts_with: Int
+
+  #
+  age_not_starts_with: Int
+
+  #
+  age_ends_with: Int
+
+  #
+  age_not_ends_with: Int
+
+  #
+  height: Int
+
+  #
+  height_not: Int
+
+  #
+  height_in: [Int]
+
+  #
+  height_not_in: [Int]
+
+  #
+  height_lt: Int
+
+  #
+  height_lte: Int
+
+  #
+  height_gt: Int
+
+  #
+  height_gte: Int
+
+  #
+  height_contains: Int
+
+  #
+  height_not_contains: Int
+
+  #
+  height_starts_with: Int
+
+  #
+  height_not_starts_with: Int
+
+  #
+  height_ends_with: Int
+
+  #
+  height_not_ends_with: Int
+
+  #
+  weight: Int
+
+  #
+  weight_not: Int
+
+  #
+  weight_in: [Int]
+
+  #
+  weight_not_in: [Int]
+
+  #
+  weight_lt: Int
+
+  #
+  weight_lte: Int
+
+  #
+  weight_gt: Int
+
+  #
+  weight_gte: Int
+
+  #
+  weight_contains: Int
+
+  #
+  weight_not_contains: Int
+
+  #
+  weight_starts_with: Int
+
+  #
+  weight_not_starts_with: Int
+
+  #
+  weight_ends_with: Int
+
+  #
+  weight_not_ends_with: Int
+
+  #
+  placeOfBirth: String
+
+  #
+  placeOfBirth_not: String
+
+  #
+  placeOfBirth_in: [String]
+
+  #
+  placeOfBirth_not_in: [String]
+
+  #
+  placeOfBirth_lt: String
+
+  #
+  placeOfBirth_lte: String
+
+  #
+  placeOfBirth_gt: String
+
+  #
+  placeOfBirth_gte: String
+
+  #
+  placeOfBirth_contains: String
+
+  #
+  placeOfBirth_not_contains: String
+
+  #
+  placeOfBirth_starts_with: String
+
+  #
+  placeOfBirth_not_starts_with: String
+
+  #
+  placeOfBirth_ends_with: String
+
+  #
+  placeOfBirth_not_ends_with: String
+
+  #
+  dateOfBirth: DateTime
+
+  #
+  dateOfBirth_not: DateTime
+
+  #
+  dateOfBirth_in: [DateTime]
+
+  #
+  dateOfBirth_not_in: [DateTime]
+
+  #
+  dateOfBirth_lt: DateTime
+
+  #
+  dateOfBirth_lte: DateTime
+
+  #
+  dateOfBirth_gt: DateTime
+
+  #
+  dateOfBirth_gte: DateTime
+
+  #
+  dateOfBirth_contains: DateTime
+
+  #
+  dateOfBirth_not_contains: DateTime
+
+  #
+  dateOfBirth_starts_with: DateTime
+
+  #
+  dateOfBirth_not_starts_with: DateTime
+
+  #
+  dateOfBirth_ends_with: DateTime
+
+  #
+  dateOfBirth_not_ends_with: DateTime
+
+  #
+  range: Int
+
+  #
+  range_not: Int
+
+  #
+  range_in: [Int]
+
+  #
+  range_not_in: [Int]
+
+  #
+  range_lt: Int
+
+  #
+  range_lte: Int
+
+  #
+  range_gt: Int
+
+  #
+  range_gte: Int
+
+  #
+  range_contains: Int
+
+  #
+  range_not_contains: Int
+
+  #
+  range_starts_with: Int
+
+  #
+  range_not_starts_with: Int
+
+  #
+  range_ends_with: Int
+
+  #
+  range_not_ends_with: Int
+
+  #
+  stance: String
+
+  #
+  stance_not: String
+
+  #
+  stance_in: [String]
+
+  #
+  stance_not_in: [String]
+
+  #
+  stance_lt: String
+
+  #
+  stance_lte: String
+
+  #
+  stance_gt: String
+
+  #
+  stance_gte: String
+
+  #
+  stance_contains: String
+
+  #
+  stance_not_contains: String
+
+  #
+  stance_starts_with: String
+
+  #
+  stance_not_starts_with: String
+
+  #
+  stance_ends_with: String
+
+  #
+  stance_not_ends_with: String
+
+  #
+  event: EventFilter
+
+  #
+  eventId: String
+
+  #
+  division: ClassName
+
+  #
+  division_not: ClassName
+
+  #
+  division_in: [ClassName]
+
+  #
+  division_not_in: [ClassName]
+
+  #
+  division_lt: ClassName
+
+  #
+  division_lte: ClassName
+
+  #
+  division_gt: ClassName
+
+  #
+  division_gte: ClassName
+
+  #
+  typeAthlete: TypeAthlete
+
+  #
+  typeAthlete_not: TypeAthlete
+
+  #
+  typeAthlete_in: [TypeAthlete]
+
+  #
+  typeAthlete_not_in: [TypeAthlete]
+
+  #
+  typeAthlete_lt: TypeAthlete
+
+  #
+  typeAthlete_lte: TypeAthlete
+
+  #
+  typeAthlete_gt: TypeAthlete
+
+  #
+  typeAthlete_gte: TypeAthlete
+
+  #
+  win: Int
+
+  #
+  win_not: Int
+
+  #
+  win_in: [Int]
+
+  #
+  win_not_in: [Int]
+
+  #
+  win_lt: Int
+
+  #
+  win_lte: Int
+
+  #
+  win_gt: Int
+
+  #
+  win_gte: Int
+
+  #
+  win_contains: Int
+
+  #
+  win_not_contains: Int
+
+  #
+  win_starts_with: Int
+
+  #
+  win_not_starts_with: Int
+
+  #
+  win_ends_with: Int
+
+  #
+  win_not_ends_with: Int
+
+  #
+  lose: Int
+
+  #
+  lose_not: Int
+
+  #
+  lose_in: [Int]
+
+  #
+  lose_not_in: [Int]
+
+  #
+  lose_lt: Int
+
+  #
+  lose_lte: Int
+
+  #
+  lose_gt: Int
+
+  #
+  lose_gte: Int
+
+  #
+  lose_contains: Int
+
+  #
+  lose_not_contains: Int
+
+  #
+  lose_starts_with: Int
+
+  #
+  lose_not_starts_with: Int
+
+  #
+  lose_ends_with: Int
+
+  #
+  lose_not_ends_with: Int
+
+  #
+  draw: Int
+
+  #
+  draw_not: Int
+
+  #
+  draw_in: [Int]
+
+  #
+  draw_not_in: [Int]
+
+  #
+  draw_lt: Int
+
+  #
+  draw_lte: Int
+
+  #
+  draw_gt: Int
+
+  #
+  draw_gte: Int
+
+  #
+  draw_contains: Int
+
+  #
+  draw_not_contains: Int
+
+  #
+  draw_starts_with: Int
+
+  #
+  draw_not_starts_with: Int
+
+  #
+  draw_ends_with: Int
+
+  #
+  draw_not_ends_with: Int
+
+  #
+  knockOut: Int
+
+  #
+  knockOut_not: Int
+
+  #
+  knockOut_in: [Int]
+
+  #
+  knockOut_not_in: [Int]
+
+  #
+  knockOut_lt: Int
+
+  #
+  knockOut_lte: Int
+
+  #
+  knockOut_gt: Int
+
+  #
+  knockOut_gte: Int
+
+  #
+  knockOut_contains: Int
+
+  #
+  knockOut_not_contains: Int
+
+  #
+  knockOut_starts_with: Int
+
+  #
+  knockOut_not_starts_with: Int
+
+  #
+  knockOut_ends_with: Int
+
+  #
+  knockOut_not_ends_with: Int
+
+  #
+  fightWeight: Int
+
+  #
+  fightWeight_not: Int
+
+  #
+  fightWeight_in: [Int]
+
+  #
+  fightWeight_not_in: [Int]
+
+  #
+  fightWeight_lt: Int
+
+  #
+  fightWeight_lte: Int
+
+  #
+  fightWeight_gt: Int
+
+  #
+  fightWeight_gte: Int
+
+  #
+  fightWeight_contains: Int
+
+  #
+  fightWeight_not_contains: Int
+
+  #
+  fightWeight_starts_with: Int
+
+  #
+  fightWeight_not_starts_with: Int
+
+  #
+  fightWeight_ends_with: Int
+
+  #
+  fightWeight_not_ends_with: Int
+
+  #
+  status: AthleteStatus
+
+  #
+  status_not: AthleteStatus
+
+  #
+  status_in: [AthleteStatus]
+
+  #
+  status_not_in: [AthleteStatus]
+
+  #
+  status_lt: AthleteStatus
+
+  #
+  status_lte: AthleteStatus
+
+  #
+  status_gt: AthleteStatus
+
+  #
+  status_gte: AthleteStatus
+
+  #
+  city: String
+
+  #
+  city_not: String
+
+  #
+  city_in: [String]
+
+  #
+  city_not_in: [String]
+
+  #
+  city_lt: String
+
+  #
+  city_lte: String
+
+  #
+  city_gt: String
+
+  #
+  city_gte: String
+
+  #
+  city_contains: String
+
+  #
+  city_not_contains: String
+
+  #
+  city_starts_with: String
+
+  #
+  city_not_starts_with: String
+
+  #
+  city_ends_with: String
+
+  #
+  city_not_ends_with: String
+
+  #
+  province: String
+
+  #
+  province_not: String
+
+  #
+  province_in: [String]
+
+  #
+  province_not_in: [String]
+
+  #
+  province_lt: String
+
+  #
+  province_lte: String
+
+  #
+  province_gt: String
+
+  #
+  province_gte: String
+
+  #
+  province_contains: String
+
+  #
+  province_not_contains: String
+
+  #
+  province_starts_with: String
+
+  #
+  province_not_starts_with: String
+
+  #
+  province_ends_with: String
+
+  #
+  province_not_ends_with: String
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+#
+input EventFilter {
+  #
+  upComingLiveStream: String
+
+  #
+  upComingLiveStream_not: String
+
+  #
+  upComingLiveStream_in: [String]
+
+  #
+  upComingLiveStream_not_in: [String]
+
+  #
+  upComingLiveStream_lt: String
+
+  #
+  upComingLiveStream_lte: String
+
+  #
+  upComingLiveStream_gt: String
+
+  #
+  upComingLiveStream_gte: String
+
+  #
+  upComingLiveStream_contains: String
+
+  #
+  upComingLiveStream_not_contains: String
+
+  #
+  upComingLiveStream_starts_with: String
+
+  #
+  upComingLiveStream_not_starts_with: String
+
+  #
+  upComingLiveStream_ends_with: String
+
+  #
+  upComingLiveStream_not_ends_with: String
+
+  #
+  liveStream: String
+
+  #
+  liveStream_not: String
+
+  #
+  liveStream_in: [String]
+
+  #
+  liveStream_not_in: [String]
+
+  #
+  liveStream_lt: String
+
+  #
+  liveStream_lte: String
+
+  #
+  liveStream_gt: String
+
+  #
+  liveStream_gte: String
+
+  #
+  liveStream_contains: String
+
+  #
+  liveStream_not_contains: String
+
+  #
+  liveStream_starts_with: String
+
+  #
+  liveStream_not_starts_with: String
+
+  #
+  liveStream_ends_with: String
+
+  #
+  liveStream_not_ends_with: String
+
+  #
+  watchReplay: String
+
+  #
+  watchReplay_not: String
+
+  #
+  watchReplay_in: [String]
+
+  #
+  watchReplay_not_in: [String]
+
+  #
+  watchReplay_lt: String
+
+  #
+  watchReplay_lte: String
+
+  #
+  watchReplay_gt: String
+
+  #
+  watchReplay_gte: String
+
+  #
+  watchReplay_contains: String
+
+  #
+  watchReplay_not_contains: String
+
+  #
+  watchReplay_starts_with: String
+
+  #
+  watchReplay_not_starts_with: String
+
+  #
+  watchReplay_ends_with: String
+
+  #
+  watchReplay_not_ends_with: String
+
+  #
+  athletes: PersonalProfileFilter
+
+  #
+  athletesId: String
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+#
+enum ClassName {
+  #
+  MENS_POND_FOR_POND
+
+  #
+  FLY_WEIGHT
+
+  #
+  BANTAM_WEIGHT
+
+  #
+  FEATHER_WEIGHT
+}
+
+#
+enum TypeAthlete {
+  #
+  PROFESSIONAL
+
+  #
+  CELEBRITY
+}
+
+#
+enum AthleteStatus {
+  #
+  ACTIVE
+
+  #
+  RETIRED
+
+  #
+  NOT_FIGHTING
+}
+
+#
+enum PersonalProfileOrderBy {
+  #
+  name_ASC
+
+  #
+  name_DESC
+
+  #
+  akaName_ASC
+
+  #
+  akaName_DESC
+
+  #
+  age_ASC
+
+  #
+  age_DESC
+
+  #
+  height_ASC
+
+  #
+  height_DESC
+
+  #
+  weight_ASC
+
+  #
+  weight_DESC
+
+  #
+  placeOfBirth_ASC
+
+  #
+  placeOfBirth_DESC
+
+  #
+  dateOfBirth_ASC
+
+  #
+  dateOfBirth_DESC
+
+  #
+  range_ASC
+
+  #
+  range_DESC
+
+  #
+  stance_ASC
+
+  #
+  stance_DESC
+
+  #
+  win_ASC
+
+  #
+  win_DESC
+
+  #
+  lose_ASC
+
+  #
+  lose_DESC
+
+  #
+  draw_ASC
+
+  #
+  draw_DESC
+
+  #
+  knockOut_ASC
+
+  #
+  knockOut_DESC
+
+  #
+  fightWeight_ASC
+
+  #
+  fightWeight_DESC
+
+  #
+  city_ASC
+
+  #
+  city_DESC
+
+  #
+  province_ASC
+
+  #
+  province_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type PersonalProfile {
+  #
+  name: String
+
+  #
+  akaName: String
+
+  #
+  age: Int
+
+  #
+  height: Int
+
+  #
+  weight: Int
+
+  #
+  placeOfBirth: String
+
+  #
+  dateOfBirth: DateTime
+
+  #
+  range: Int
+
+  #
+  stance: String
+
+  #
+  event: Event
+
+  #
+  division: ClassName
+
+  #
+  typeAthlete: TypeAthlete
+
+  #
+  win: Int
+
+  #
+  lose: Int
+
+  #
+  draw: Int
+
+  #
+  knockOut: Int
+
+  #
+  fightWeight: Int
+
+  #
+  status: AthleteStatus
+
+  #
+  city: String
+
+  #
+  province: String
+
+  #
+  id: String
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+}
+
+#
+type Event {
+  #
+  upComingLiveStream: String
+
+  #
+  liveStream: String
+
+  #
+  watchReplay: String
+
+  #
+  athletes(
+    query: JSON
+    where: PersonalProfileFilter
+    or: [PersonalProfileFilter]
+    orderBy: PersonalProfileOrderBy
+    skip: Int
+    limit: Int
+  ): [PersonalProfile]
+
+  #
+  id: String
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+}
+
+#
+type PersonalProfileConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [PersonalProfile]
+}
+
+#
+enum EventOrderBy {
+  #
+  upComingLiveStream_ASC
+
+  #
+  upComingLiveStream_DESC
+
+  #
+  liveStream_ASC
+
+  #
+  liveStream_DESC
+
+  #
+  watchReplay_ASC
+
+  #
+  watchReplay_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type EventConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [Event]
+}
+
+#
+input AthleteFilter {
+  #
+  name: String
+
+  #
+  name_not: String
+
+  #
+  name_in: [String]
+
+  #
+  name_not_in: [String]
+
+  #
+  name_lt: String
+
+  #
+  name_lte: String
+
+  #
+  name_gt: String
+
+  #
+  name_gte: String
+
+  #
+  name_contains: String
+
+  #
+  name_not_contains: String
+
+  #
+  name_starts_with: String
+
+  #
+  name_not_starts_with: String
+
+  #
+  name_ends_with: String
+
+  #
+  name_not_ends_with: String
+
+  #
+  alias: String
+
+  #
+  alias_not: String
+
+  #
+  alias_in: [String]
+
+  #
+  alias_not_in: [String]
+
+  #
+  alias_lt: String
+
+  #
+  alias_lte: String
+
+  #
+  alias_gt: String
+
+  #
+  alias_gte: String
+
+  #
+  alias_contains: String
+
+  #
+  alias_not_contains: String
+
+  #
+  alias_starts_with: String
+
+  #
+  alias_not_starts_with: String
+
+  #
+  alias_ends_with: String
+
+  #
+  alias_not_ends_with: String
+
+  #
+  dateOfBirth: Date
+
+  #
+  dateOfBirth_not: Date
+
+  #
+  dateOfBirth_in: [Date]
+
+  #
+  dateOfBirth_not_in: [Date]
+
+  #
+  dateOfBirth_lt: Date
+
+  #
+  dateOfBirth_lte: Date
+
+  #
+  dateOfBirth_gt: Date
+
+  #
+  dateOfBirth_gte: Date
+
+  #
+  dateOfBirth_contains: Date
+
+  #
+  dateOfBirth_not_contains: Date
+
+  #
+  dateOfBirth_starts_with: Date
+
+  #
+  dateOfBirth_not_starts_with: Date
+
+  #
+  dateOfBirth_ends_with: Date
+
+  #
+  dateOfBirth_not_ends_with: Date
+
+  #
+  placeOfBirth: String
+
+  #
+  placeOfBirth_not: String
+
+  #
+  placeOfBirth_in: [String]
+
+  #
+  placeOfBirth_not_in: [String]
+
+  #
+  placeOfBirth_lt: String
+
+  #
+  placeOfBirth_lte: String
+
+  #
+  placeOfBirth_gt: String
+
+  #
+  placeOfBirth_gte: String
+
+  #
+  placeOfBirth_contains: String
+
+  #
+  placeOfBirth_not_contains: String
+
+  #
+  placeOfBirth_starts_with: String
+
+  #
+  placeOfBirth_not_starts_with: String
+
+  #
+  placeOfBirth_ends_with: String
+
+  #
+  placeOfBirth_not_ends_with: String
+
+  #
+  weight: Float
+
+  #
+  weight_not: Float
+
+  #
+  weight_in: [Float]
+
+  #
+  weight_not_in: [Float]
+
+  #
+  weight_lt: Float
+
+  #
+  weight_lte: Float
+
+  #
+  weight_gt: Float
+
+  #
+  weight_gte: Float
+
+  #
+  weight_contains: Float
+
+  #
+  weight_not_contains: Float
+
+  #
+  weight_starts_with: Float
+
+  #
+  weight_not_starts_with: Float
+
+  #
+  weight_ends_with: Float
+
+  #
+  weight_not_ends_with: Float
+
+  #
+  height: Int
+
+  #
+  height_not: Int
+
+  #
+  height_in: [Int]
+
+  #
+  height_not_in: [Int]
+
+  #
+  height_lt: Int
+
+  #
+  height_lte: Int
+
+  #
+  height_gt: Int
+
+  #
+  height_gte: Int
+
+  #
+  height_contains: Int
+
+  #
+  height_not_contains: Int
+
+  #
+  height_starts_with: Int
+
+  #
+  height_not_starts_with: Int
+
+  #
+  height_ends_with: Int
+
+  #
+  height_not_ends_with: Int
+
+  #
+  stance: Int
+
+  #
+  stance_not: Int
+
+  #
+  stance_in: [Int]
+
+  #
+  stance_not_in: [Int]
+
+  #
+  stance_lt: Int
+
+  #
+  stance_lte: Int
+
+  #
+  stance_gt: Int
+
+  #
+  stance_gte: Int
+
+  #
+  stance_contains: Int
+
+  #
+  stance_not_contains: Int
+
+  #
+  stance_starts_with: Int
+
+  #
+  stance_not_starts_with: Int
+
+  #
+  stance_ends_with: Int
+
+  #
+  stance_not_ends_with: Int
+
+  #
+  fightWeight: Int
+
+  #
+  fightWeight_not: Int
+
+  #
+  fightWeight_in: [Int]
+
+  #
+  fightWeight_not_in: [Int]
+
+  #
+  fightWeight_lt: Int
+
+  #
+  fightWeight_lte: Int
+
+  #
+  fightWeight_gt: Int
+
+  #
+  fightWeight_gte: Int
+
+  #
+  fightWeight_contains: Int
+
+  #
+  fightWeight_not_contains: Int
+
+  #
+  fightWeight_starts_with: Int
+
+  #
+  fightWeight_not_starts_with: Int
+
+  #
+  fightWeight_ends_with: Int
+
+  #
+  fightWeight_not_ends_with: Int
+
+  #
+  reach: Int
+
+  #
+  reach_not: Int
+
+  #
+  reach_in: [Int]
+
+  #
+  reach_not_in: [Int]
+
+  #
+  reach_lt: Int
+
+  #
+  reach_lte: Int
+
+  #
+  reach_gt: Int
+
+  #
+  reach_gte: Int
+
+  #
+  reach_contains: Int
+
+  #
+  reach_not_contains: Int
+
+  #
+  reach_starts_with: Int
+
+  #
+  reach_not_starts_with: Int
+
+  #
+  reach_ends_with: Int
+
+  #
+  reach_not_ends_with: Int
+
+  #
+  devision: String
+
+  #
+  devision_not: String
+
+  #
+  devision_in: [String]
+
+  #
+  devision_not_in: [String]
+
+  #
+  devision_lt: String
+
+  #
+  devision_lte: String
+
+  #
+  devision_gt: String
+
+  #
+  devision_gte: String
+
+  #
+  devision_contains: String
+
+  #
+  devision_not_contains: String
+
+  #
+  devision_starts_with: String
+
+  #
+  devision_not_starts_with: String
+
+  #
+  devision_ends_with: String
+
+  #
+  devision_not_ends_with: String
+
+  #
+  athleteCategory: AthleteCategory
+
+  #
+  athleteCategory_not: AthleteCategory
+
+  #
+  athleteCategory_in: [AthleteCategory]
+
+  #
+  athleteCategory_not_in: [AthleteCategory]
+
+  #
+  athleteCategory_lt: AthleteCategory
+
+  #
+  athleteCategory_lte: AthleteCategory
+
+  #
+  athleteCategory_gt: AthleteCategory
+
+  #
+  athleteCategory_gte: AthleteCategory
+
+  #
+  athleteStatus: AthleteStatus
+
+  #
+  athleteStatus_not: AthleteStatus
+
+  #
+  athleteStatus_in: [AthleteStatus]
+
+  #
+  athleteStatus_not_in: [AthleteStatus]
+
+  #
+  athleteStatus_lt: AthleteStatus
+
+  #
+  athleteStatus_lte: AthleteStatus
+
+  #
+  athleteStatus_gt: AthleteStatus
+
+  #
+  athleteStatus_gte: AthleteStatus
+
+  #
+  slug: String
+
+  #
+  slug_not: String
+
+  #
+  slug_in: [String]
+
+  #
+  slug_not_in: [String]
+
+  #
+  slug_lt: String
+
+  #
+  slug_lte: String
+
+  #
+  slug_gt: String
+
+  #
+  slug_gte: String
+
+  #
+  slug_contains: String
+
+  #
+  slug_not_contains: String
+
+  #
+  slug_starts_with: String
+
+  #
+  slug_not_starts_with: String
+
+  #
+  slug_ends_with: String
+
+  #
+  slug_not_ends_with: String
+
+  #
+  province: String
+
+  #
+  province_not: String
+
+  #
+  province_in: [String]
+
+  #
+  province_not_in: [String]
+
+  #
+  province_lt: String
+
+  #
+  province_lte: String
+
+  #
+  province_gt: String
+
+  #
+  province_gte: String
+
+  #
+  province_contains: String
+
+  #
+  province_not_contains: String
+
+  #
+  province_starts_with: String
+
+  #
+  province_not_starts_with: String
+
+  #
+  province_ends_with: String
+
+  #
+  province_not_ends_with: String
+
+  #
+  city: String
+
+  #
+  city_not: String
+
+  #
+  city_in: [String]
+
+  #
+  city_not_in: [String]
+
+  #
+  city_lt: String
+
+  #
+  city_lte: String
+
+  #
+  city_gt: String
+
+  #
+  city_gte: String
+
+  #
+  city_contains: String
+
+  #
+  city_not_contains: String
+
+  #
+  city_starts_with: String
+
+  #
+  city_not_starts_with: String
+
+  #
+  city_ends_with: String
+
+  #
+  city_not_ends_with: String
+
+  #
+  athleteEvents: AthleteEventFilter
+
+  #
+  athleteEventsId: String
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+#
+enum AthleteCategory {
+  #
+  PROFESSIONAL
+
+  #
+  CELEBRITY
+}
+
+#
+input AthleteEventFilter {
+  #
+  livestream: LivestreamFilter
+
+  #
+  livestreamId: String
+
+  #
+  athletes: AthleteFilter
+
+  #
+  athletesId: String
+
+  #
+  time: Int
+
+  #
+  time_not: Int
+
+  #
+  time_in: [Int]
+
+  #
+  time_not_in: [Int]
+
+  #
+  time_lt: Int
+
+  #
+  time_lte: Int
+
+  #
+  time_gt: Int
+
+  #
+  time_gte: Int
+
+  #
+  time_contains: Int
+
+  #
+  time_not_contains: Int
+
+  #
+  time_starts_with: Int
+
+  #
+  time_not_starts_with: Int
+
+  #
+  time_ends_with: Int
+
+  #
+  time_not_ends_with: Int
+
+  #
+  round: Int
+
+  #
+  round_not: Int
+
+  #
+  round_in: [Int]
+
+  #
+  round_not_in: [Int]
+
+  #
+  round_lt: Int
+
+  #
+  round_lte: Int
+
+  #
+  round_gt: Int
+
+  #
+  round_gte: Int
+
+  #
+  round_contains: Int
+
+  #
+  round_not_contains: Int
+
+  #
+  round_starts_with: Int
+
+  #
+  round_not_starts_with: Int
+
+  #
+  round_ends_with: Int
+
+  #
+  round_not_ends_with: Int
+
+  #
+  method: Method
+
+  #
+  method_not: Method
+
+  #
+  method_in: [Method]
+
+  #
+  method_not_in: [Method]
+
+  #
+  method_lt: Method
+
+  #
+  method_lte: Method
+
+  #
+  method_gt: Method
+
+  #
+  method_gte: Method
+
+  #
+  date: DateTime
+
+  #
+  date_not: DateTime
+
+  #
+  date_in: [DateTime]
+
+  #
+  date_not_in: [DateTime]
+
+  #
+  date_lt: DateTime
+
+  #
+  date_lte: DateTime
+
+  #
+  date_gt: DateTime
+
+  #
+  date_gte: DateTime
+
+  #
+  date_contains: DateTime
+
+  #
+  date_not_contains: DateTime
+
+  #
+  date_starts_with: DateTime
+
+  #
+  date_not_starts_with: DateTime
+
+  #
+  date_ends_with: DateTime
+
+  #
+  date_not_ends_with: DateTime
+
+  #
+  location: String
+
+  #
+  location_not: String
+
+  #
+  location_in: [String]
+
+  #
+  location_not_in: [String]
+
+  #
+  location_lt: String
+
+  #
+  location_lte: String
+
+  #
+  location_gt: String
+
+  #
+  location_gte: String
+
+  #
+  location_contains: String
+
+  #
+  location_not_contains: String
+
+  #
+  location_starts_with: String
+
+  #
+  location_not_starts_with: String
+
+  #
+  location_ends_with: String
+
+  #
+  location_not_ends_with: String
+
+  #
+  winAthlete: AthleteFilter
+
+  #
+  winAthleteId: String
+
+  #
+  loseAthlete: AthleteFilter
+
+  #
+  loseAthleteId: String
+
+  #
+  id: String
+
+  #
+  id_not: String
+
+  #
+  id_in: [String]
+
+  #
+  id_not_in: [String]
+
+  #
+  id_lt: String
+
+  #
+  id_lte: String
+
+  #
+  id_gt: String
+
+  #
+  id_gte: String
+
+  #
+  id_contains: String
+
+  #
+  id_not_contains: String
+
+  #
+  id_starts_with: String
+
+  #
+  id_not_starts_with: String
+
+  #
+  id_ends_with: String
+
+  #
+  id_not_ends_with: String
+
+  #
+  createdBy: UserFilter
+
+  #
+  createdById: String
+
+  #
+  updatedBy: UserFilter
+
+  #
+  updatedById: String
+
+  #
+  createdAt: DateTime
+
+  #
+  createdAt_not: DateTime
+
+  #
+  createdAt_in: [DateTime]
+
+  #
+  createdAt_not_in: [DateTime]
+
+  #
+  createdAt_lt: DateTime
+
+  #
+  createdAt_lte: DateTime
+
+  #
+  createdAt_gt: DateTime
+
+  #
+  createdAt_gte: DateTime
+
+  #
+  createdAt_contains: DateTime
+
+  #
+  createdAt_not_contains: DateTime
+
+  #
+  createdAt_starts_with: DateTime
+
+  #
+  createdAt_not_starts_with: DateTime
+
+  #
+  createdAt_ends_with: DateTime
+
+  #
+  createdAt_not_ends_with: DateTime
+
+  #
+  updatedAt: DateTime
+
+  #
+  updatedAt_not: DateTime
+
+  #
+  updatedAt_in: [DateTime]
+
+  #
+  updatedAt_not_in: [DateTime]
+
+  #
+  updatedAt_lt: DateTime
+
+  #
+  updatedAt_lte: DateTime
+
+  #
+  updatedAt_gt: DateTime
+
+  #
+  updatedAt_gte: DateTime
+
+  #
+  updatedAt_contains: DateTime
+
+  #
+  updatedAt_not_contains: DateTime
+
+  #
+  updatedAt_starts_with: DateTime
+
+  #
+  updatedAt_not_starts_with: DateTime
+
+  #
+  updatedAt_ends_with: DateTime
+
+  #
+  updatedAt_not_ends_with: DateTime
+}
+
+#
+enum Method {
+  #
+  SUBMISSION
+
+  #
+  KO_TKO
+
+  #
+  DECISION
+
+  #
+  DISQUALIFICATION
+
+  #
+  NO_CONTEST
+}
+
+#
+enum AthleteOrderBy {
+  #
+  name_ASC
+
+  #
+  name_DESC
+
+  #
+  alias_ASC
+
+  #
+  alias_DESC
+
+  #
+  dateOfBirth_ASC
+
+  #
+  dateOfBirth_DESC
+
+  #
+  placeOfBirth_ASC
+
+  #
+  placeOfBirth_DESC
+
+  #
+  weight_ASC
+
+  #
+  weight_DESC
+
+  #
+  height_ASC
+
+  #
+  height_DESC
+
+  #
+  stance_ASC
+
+  #
+  stance_DESC
+
+  #
+  fightWeight_ASC
+
+  #
+  fightWeight_DESC
+
+  #
+  reach_ASC
+
+  #
+  reach_DESC
+
+  #
+  devision_ASC
+
+  #
+  devision_DESC
+
+  #
+  slug_ASC
+
+  #
+  slug_DESC
+
+  #
+  province_ASC
+
+  #
+  province_DESC
+
+  #
+  city_ASC
+
+  #
+  city_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type Athlete {
+  #
+  name: String
+
+  #
+  alias: String
+
+  #
+  dateOfBirth: Date
+
+  #
+  placeOfBirth: String
+
+  #
+  weight: Float
+
+  #
+  height: Int
+
+  #
+  stance: Int
+
+  #
+  fightWeight: Int
+
+  #
+  reach: Int
+
+  #
+  devision: String
+
+  #
+  athleteCategory: AthleteCategory
+
+  #
+  athleteStatus: AthleteStatus
+
+  #
+  slug: String
+
+  #
+  province: String
+
+  #
+  city: String
+
+  #
+  athleteEvents(
+    query: JSON
+    where: AthleteEventFilter
+    or: [AthleteEventFilter]
+    orderBy: AthleteEventOrderBy
+    skip: Int
+    limit: Int
+  ): [AthleteEvent!]
+
+  #
+  id: String
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+}
+
+#
+enum AthleteEventOrderBy {
+  #
+  time_ASC
+
+  #
+  time_DESC
+
+  #
+  round_ASC
+
+  #
+  round_DESC
+
+  #
+  date_ASC
+
+  #
+  date_DESC
+
+  #
+  location_ASC
+
+  #
+  location_DESC
+
+  #
+  id_ASC
+
+  #
+  id_DESC
+
+  #
+  createdAt_ASC
+
+  #
+  createdAt_DESC
+
+  #
+  updatedAt_ASC
+
+  #
+  updatedAt_DESC
+}
+
+#
+type AthleteEvent {
+  #
+  livestream: Livestream
+
+  #
+  athletes(
+    query: JSON
+    where: AthleteFilter
+    or: [AthleteFilter]
+    orderBy: AthleteOrderBy
+    skip: Int
+    limit: Int
+  ): [Athlete!]
+
+  #
+  time: Int
+
+  #
+  round: Int
+
+  #
+  method: Method
+
+  #
+  date: DateTime
+
+  #
+  location: String
+
+  #
+  winAthlete: Athlete
+
+  #
+  loseAthlete: Athlete
+
+  #
+  id: String
+
+  #
+  createdBy: User
+
+  #
+  updatedBy: User
+
+  #
+  createdAt: DateTime
+
+  #
+  updatedAt: DateTime
+}
+
+#
+type AthleteConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [Athlete]
+}
+
+#
+type AthleteEventConnection {
+  #
+  total: Int
+
+  #
+  limit: Int
+
+  #
+  skip: Int
+
+  #
+  data: [AthleteEvent]
+}
+
+#
+type Mutation {
+  #
+  default: String
+
+  #
+  sendEmail(input: SendEmailInput): Response
+
+  #
+  sendEmailToUsers(
+    input: SendEmailToUsersInput
+    where: UserFilter
+    query: JSON
+  ): Response
+
+  #
+  subscribePushNotificatiton(input: RegisterPushNotification!): Response
+
+  #
+  unsubscribePushNotification(input: RegisterPushNotification!): Response
+
+  #
+  createPushNotificationSegment(
+    input: CreatePushNotificationSegmentInput
+  ): PushNotificationResponse
+
+  #
+  deletePushNotificationSegment(id: String!): PushNotificationResponse
+
+  #
+  updatePushNotificationDevice(
+    id: String!
+    input: UpdatePushNotificaitonDeviceInput
+  ): PushNotificationResponse
+
+  #
+  sendPushNotification(input: PushNotificationInput!): Response
+
+  #
+  sendPushNotificationById(
+    input: PushNotificationInput!
+    userIds: [String]!
+  ): Response
+
+  #
+  sendPushNotificationBySegment(
+    input: PushNotificationInput
+    segments: [String]!
+  ): Response
+
+  #
+  login(input: LoginInput): Login
+
+  #
+  logout(input: LogoutInput): User
+
+  #
+  register(input: RegisterInput): Login
+
+  #
+  loginWithGoogle(input: LoginWithGoogleInput): Login
+
+  #
+  loginWithFacebook(input: LoginWithFacebookInput): Login
+
+  #
+  createUser(input: CreateUserInput): Login
+
+  #
+  forgetPassword(input: ForgetPasswordInput): Response
+
+  #
+  resetPassword(input: ResetPasswordInput): Response
+
+  #
+  verifyEmail(input: VerifyEmailInput): VerifyEmail
+
+  #
+  updateUser(input: UpdateUserInput, id: String!): User
+
+  #
+  updateUsers(inputs: [UpdateUserInputs]!): BulkUser
+
+  #
+  deleteUser(id: String!): User
+
+  #
+  changeProfile(input: ChangeProfileInput): User
+
+  #
+  changePassword(input: ChangePasswordInput): Response
+
+  #
+  reSendVerifyEmail(input: SendVerifyEmailInput): Response
+
+  #
+  requestOtp(input: RequestOtpInput): Response
+
+  #
+  verifyOtp(input: VerifyOtpInput): Response
+
+  #
+  loginWithPhone(input: RequestOtpInput): Response
+
+  #
+  verifyLoginWithPhone(input: VerifyOtpInput): Login
+
+  #
+  deleteUsers(ids: [ID]!): BulkUser
+
+  #
+  createCache(input: CreateCacheInput): Cache
+
+  #
+  updateCache(input: UpdateCacheInput, key: String!): Cache
+
+  #
+  deleteCache(key: String!): Cache
+
+  #
+  mgFunction(name: String!, type: String!, data: JSON): MgFunction
+
+  #
+  publish(topic: String!, data: JSON): Subscribe
+
+  #
+  withTransaction(input: [DatabaseTransactionInput]): DatabaseTransaction
+
+  #
+  createLivestream(input: CreateLivestreamInput!): Livestream
+
+  #
+  createLivestreams(inputs: [CreateLivestreamInput]!): bulkLivestream
+
+  #
+  updateLivestream(input: UpdateLivestreamInput!, id: String!): Livestream
+
+  #
+  updateLivestreams(inputs: [UpdateLivestreamInputs]!): bulkLivestream
+
+  #
+  deleteLivestream(id: String!): Livestream
+
+  #
+  deleteLivestreams(ids: [ID]!): bulkLivestream
+
+  #
+  createPayment(input: CreatePaymentInput!): Payment
+
+  #
+  createPayments(inputs: [CreatePaymentInput]!): bulkPayment
+
+  #
+  updatePayment(input: UpdatePaymentInput!, id: String!): Payment
+
+  #
+  updatePayments(inputs: [UpdatePaymentInputs]!): bulkPayment
+
+  #
+  deletePayment(id: String!): Payment
+
+  #
+  deletePayments(ids: [ID]!): bulkPayment
+
+  #
+  createPurchase(input: CreatePurchaseInput!): Purchase
+
+  #
+  createPurchases(inputs: [CreatePurchaseInput]!): bulkPurchase
+
+  #
+  updatePurchase(input: UpdatePurchaseInput!, id: String!): Purchase
+
+  #
+  updatePurchases(inputs: [UpdatePurchaseInputs]!): bulkPurchase
+
+  #
+  deletePurchase(id: String!): Purchase
+
+  #
+  deletePurchases(ids: [ID]!): bulkPurchase
+
+  #
+  createPersonalProfile(input: CreatePersonalProfileInput!): PersonalProfile
+
+  #
+  createPersonalProfiles(
+    inputs: [CreatePersonalProfileInput]!
+  ): bulkPersonalProfile
+
+  #
+  updatePersonalProfile(
+    input: UpdatePersonalProfileInput!
+    id: String!
+  ): PersonalProfile
+
+  #
+  updatePersonalProfiles(
+    inputs: [UpdatePersonalProfileInputs]!
+  ): bulkPersonalProfile
+
+  #
+  deletePersonalProfile(id: String!): PersonalProfile
+
+  #
+  deletePersonalProfiles(ids: [ID]!): bulkPersonalProfile
+
+  #
+  createEvent(input: CreateEventInput!): Event
+
+  #
+  createEvents(inputs: [CreateEventInput]!): bulkEvent
+
+  #
+  updateEvent(input: UpdateEventInput!, id: String!): Event
+
+  #
+  updateEvents(inputs: [UpdateEventInputs]!): bulkEvent
+
+  #
+  deleteEvent(id: String!): Event
+
+  #
+  deleteEvents(ids: [ID]!): bulkEvent
+
+  #
+  createAthlete(input: CreateAthleteInput!): Athlete
+
+  #
+  createAthletes(inputs: [CreateAthleteInput]!): bulkAthlete
+
+  #
+  updateAthlete(input: UpdateAthleteInput!, id: String!): Athlete
+
+  #
+  updateAthletes(inputs: [UpdateAthleteInputs]!): bulkAthlete
+
+  #
+  deleteAthlete(id: String!): Athlete
+
+  #
+  deleteAthletes(ids: [ID]!): bulkAthlete
+
+  #
+  removeAthleteEventOnAthlete(
+    athleteEventId: String!
+    athleteId: String!
+  ): Athlete
+
+  #
+  addAthleteEventOnAthlete(athleteEventId: String!, athleteId: String!): Athlete
+
+  #
+  createAthleteEvent(input: CreateAthleteEventInput!): AthleteEvent
+
+  #
+  createAthleteEvents(inputs: [CreateAthleteEventInput]!): bulkAthleteEvent
+
+  #
+  updateAthleteEvent(input: UpdateAthleteEventInput!, id: String!): AthleteEvent
+
+  #
+  updateAthleteEvents(inputs: [UpdateAthleteEventInputs]!): bulkAthleteEvent
+
+  #
+  deleteAthleteEvent(id: String!): AthleteEvent
+
+  #
+  deleteAthleteEvents(ids: [ID]!): bulkAthleteEvent
+
+  #
+  removeAthleteOnAthleteEvent(
+    athleteId: String!
+    athleteEventId: String!
+  ): AthleteEvent
+
+  #
+  addAthleteOnAthleteEvent(
+    athleteId: String!
+    athleteEventId: String!
+  ): AthleteEvent
+}
+
+#
+input SendEmailInput {
+  #
+  to: String!
+
+  #
+  from: String
+
+  #
+  fromName: String
+
+  #
+  subject: String!
+
+  #
+  title: String
+
+  #
+  body: String
+
+  #
+  html: String
+
+  #
+  emailImageHeader: String
+
+  #
+  emailLink: String
+
+  #
+  emailVerificationCode: String
+}
+
+#
+type Response {
+  #
+  message: String
+}
+
+#
+input SendEmailToUsersInput {
+  #
+  from: String
+
+  #
+  fromName: String
+
+  #
+  subject: String!
+
+  #
+  title: String
+
+  #
+  body: String
+
+  #
+  html: String
+
+  #
+  emailImageHeader: String
+
+  #
+  emailLink: String
+
+  #
+  emailVerificationCode: String
+}
+
+#
+input RegisterPushNotification {
+  #
+  playerId: String!
+
+  #
+  segment: String
+}
+
+#
+input CreatePushNotificationSegmentInput {
+  #
+  name: String!
+
+  #
+  filters: [PushNotificationSegmentFilter]
+}
+
+#
+input PushNotificationSegmentFilter {
+  #
+  key: String
+
+  #
+  field: String
+
+  #
+  value: String
+
+  #
+  relation: String
+
+  #
+  operator: String
+}
+
+#
+type PushNotificationResponse {
+  #
+  id: String
+
+  #
+  success: Boolean
+
+  #
+  errors: [String]
+}
+
+#
+input UpdatePushNotificaitonDeviceInput {
+  #
+  tags: JSON
+
+  #
+  identifier: String
+
+  #
+  identifier_auth_hash: String
+
+  #
+  language: String
+
+  #
+  timezone: Int
+
+  #
+  game_version: String
+
+  #
+  device_model: String
+
+  #
+  device_os: String
+
+  #
+  ad_id: String
+
+  #
+  sdk: String
+
+  #
+  session_count: Int
+
+  #
+  amount_spent: String
+
+  #
+  created_at: Int
+
+  #
+  playtime: Int
+
+  #
+  badge_count: Int
+
+  #
+  last_active: Int
+
+  #
+  notification_types: Int
+
+  #
+  test_type: Int
+
+  #
+  long: Float
+
+  #
+  lat: Float
+
+  #
+  country: String
+
+  #
+  external_user_id: String
+
+  #
+  external_user_id_auth_hash: String
+}
+
+#
+input PushNotificationInput {
+  #
+  contents: String
+}
+
+#
+input LoginInput {
+  #
+  email: EmailAddress!
+
+  #
+  password: String
+}
+
+#
+type Login {
+  #
+  token: String
+
+  #
+  user: User
+}
+
+#
+input LogoutInput {
+  #
+  token: String!
+}
+
+#
+input RegisterInput {
+  #
+  email: EmailAddress!
+
+  #
+  password: String!
+
+  #
+  firstName: String!
+
+  #
+  lastName: String
+
+  #
+  phoneNumber: PhoneNumber
+
+  #
+  peertube: Text
+
+  #
+  peertubeToken: Text
+}
+
+#
+input LoginWithGoogleInput {
+  #
+  jwtToken: String
+}
+
+#
+input LoginWithFacebookInput {
+  #
+  jwtToken: String
+}
+
+#
+input CreateUserInput {
+  #
+  email: EmailAddress!
+
+  #
+  password: String!
+
+  #
+  firstName: String!
+
+  #
+  lastName: String
+
+  #
+  phoneNumber: PhoneNumber
+
+  #
+  role: Role!
+
+  #
+  peertube: Text
+
+  #
+  peertubeToken: Text
+}
+
+#
+input ForgetPasswordInput {
+  #
+  email: String!
+
+  #
+  from: String
+
+  #
+  fromName: String
+
+  #
+  subject: String
+
+  #
+  html: String
+}
+
+#
+input ResetPasswordInput {
+  #
+  newPassword: String!
+
+  #
+  token: String!
+}
+
+#
+input VerifyEmailInput {
+  #
+  token: String!
+}
+
+#
+type VerifyEmail {
+  #
+  message: String
+
+  #
+  token: String
+
+  #
+  user: User
+}
+
+#
+input UpdateUserInput {
+  #
+  password: String
+
+  #
+  firstName: String
+
+  #
+  lastName: String
+
+  #
+  phoneNumber: PhoneNumber
+
+  #
+  role: Role
+
+  #
+  verify: Int
+
+  #
+  peertube: Text
+
+  #
+  peertubeToken: Text
+}
+
+#
+input UpdateUserInputs {
+  #
+  id: String!
+
+  #
+  input: UpdateUserInput
+}
+
+#
+type BulkUser {
+  #
+  results: [User]
+
+  #
+  errors: [String]
+}
+
+#
+input ChangeProfileInput {
+  #
+  email: String
+
+  #
+  firstName: String
+
+  #
+  lastName: String
+
+  #
+  phoneNumber: PhoneNumber
+
+  #
+  peertube: Text
+
+  #
+  peertubeToken: Text
+}
+
+#
+input ChangePasswordInput {
+  #
+  oldPassword: String!
+
+  #
+  newPassword: String!
+}
+
+#
+input SendVerifyEmailInput {
+  #
+  email: EmailAddress
+}
+
+#
+input RequestOtpInput {
+  #
+  phoneNumber: PhoneNumber!
+}
+
+#
+input VerifyOtpInput {
+  #
+  phoneNumber: PhoneNumber!
+
+  #
+  code: String!
+}
+
+#
+input CreateCacheInput {
+  #
+  name: String
+
+  #
+  key: String!
+
+  #
+  query: String
+
+  #
+  data: Object
+
+  #
+  expired: Int
+}
+
+#
+input UpdateCacheInput {
+  #
+  name: String
+
+  #
+  query: String
+
+  #
+  data: Object
+
+  #
+  expired: Int
+}
+
+#
+type MgFunction {
+  #
+  name: String
+
+  #
+  type: String
+
+  #
+  data: JSON
+}
+
+#
+type Subscribe {
+  #
+  topic: String
+
+  #
+  data: JSON
+}
+
+#
+input DatabaseTransactionInput {
+  #
+  table: String!
+
+  #
+  action: String!
+
+  #
+  variable: String!
+
+  #
+  query: JSON
+
+  #
+  data: JSON
+
+  #
+  condition: String
+}
+
+#
+type DatabaseTransaction {
+  #
+  result: JSON
+}
+
+#
+input CreateLivestreamInput {
+  #
+  title: String!
+
+  #
+  liveAt: DateTime!
+
+  #
+  status: LivestreamStatus
+
+  #
+  description: RichText
+
+  #
+  summary: String
+
+  #
+  price: Float!
+
+  #
+  embedUrl: String
+
+  #
+  image: Upload
+
+  #
+  videoId: String
+
+  #
+  limit: Int = -1
+
+  #
+  embedLiveChat: String
+}
+
+# The `Upload` scalar type represents a file upload.
+scalar Upload
+
+#
+type bulkLivestream {
+  #
+  results: [Livestream]
+
+  #
+  errors: [String]
+}
+
+#
+input UpdateLivestreamInput {
+  #
+  title: String
+
+  #
+  liveAt: DateTime
+
+  #
+  status: LivestreamStatus
+
+  #
+  description: RichText
+
+  #
+  summary: String
+
+  #
+  price: Float
+
+  #
+  embedUrl: String
+
+  #
+  image: Upload
+
+  #
+  videoId: String
+
+  #
+  limit: Int
+
+  #
+  embedLiveChat: String
+}
+
+#
+input UpdateLivestreamInputs {
+  #
+  id: String!
+
+  #
+  input: UpdateLivestreamInput
+}
+
+#
+input CreatePaymentInput {
+  #
+  invoiceId: String!
+
+  #
+  invoiceUrl: URL!
+
+  #
+  expiredAt: DateTime
+
+  #
+  snapshot: Text
+
+  #
+  externalId: String!
+
+  #
+  userId: String!
+
+  #
+  status: PaymentStatus!
+}
+
+#
+type bulkPayment {
+  #
+  results: [Payment]
+
+  #
+  errors: [String]
+}
+
+#
+input UpdatePaymentInput {
+  #
+  invoiceId: String
+
+  #
+  invoiceUrl: URL
+
+  #
+  expiredAt: DateTime
+
+  #
+  snapshot: Text
+
+  #
+  externalId: String
+
+  #
+  userId: String
+
+  #
+  status: PaymentStatus
+}
+
+#
+input UpdatePaymentInputs {
+  #
+  id: String!
+
+  #
+  input: UpdatePaymentInput
+}
+
+#
+input CreatePurchaseInput {
+  #
+  livestreamId: String!
+
+  #
+  purchasedById: String!
+
+  #
+  snapshot: Text
+}
+
+#
+type bulkPurchase {
+  #
+  results: [Purchase]
+
+  #
+  errors: [String]
+}
+
+#
+input UpdatePurchaseInput {
+  #
+  livestreamId: String
+
+  #
+  purchasedById: String
+
+  #
+  snapshot: Text
+}
+
+#
+input UpdatePurchaseInputs {
+  #
+  id: String!
+
+  #
+  input: UpdatePurchaseInput
+}
+
+#
+input CreatePersonalProfileInput {
+  #
+  name: String
+
+  #
+  akaName: String
+
+  #
+  age: Int
+
+  #
+  height: Int
+
+  #
+  weight: Int
+
+  #
+  placeOfBirth: String
+
+  #
+  dateOfBirth: DateTime
+
+  #
+  range: Int
+
+  #
+  stance: String
+
+  #
+  eventId: String
+
+  #
+  division: ClassName
+
+  #
+  typeAthlete: TypeAthlete!
+
+  #
+  win: Int
+
+  #
+  lose: Int
+
+  #
+  draw: Int
+
+  #
+  knockOut: Int
+
+  #
+  fightWeight: Int
+
+  #
+  status: AthleteStatus
+
+  #
+  city: String
+
+  #
+  province: String
+}
+
+#
+type bulkPersonalProfile {
+  #
+  results: [PersonalProfile]
+
+  #
+  errors: [String]
+}
+
+#
+input UpdatePersonalProfileInput {
+  #
+  name: String
+
+  #
+  akaName: String
+
+  #
+  age: Int
+
+  #
+  height: Int
+
+  #
+  weight: Int
+
+  #
+  placeOfBirth: String
+
+  #
+  dateOfBirth: DateTime
+
+  #
+  range: Int
+
+  #
+  stance: String
+
+  #
+  eventId: String
+
+  #
+  division: ClassName
+
+  #
+  typeAthlete: TypeAthlete
+
+  #
+  win: Int
+
+  #
+  lose: Int
+
+  #
+  draw: Int
+
+  #
+  knockOut: Int
+
+  #
+  fightWeight: Int
+
+  #
+  status: AthleteStatus
+
+  #
+  city: String
+
+  #
+  province: String
+}
+
+#
+input UpdatePersonalProfileInputs {
+  #
+  id: String!
+
+  #
+  input: UpdatePersonalProfileInput
+}
+
+#
+input CreateEventInput {
+  #
+  upComingLiveStream: String
+
+  #
+  liveStream: String
+
+  #
+  watchReplay: String
+
+  #
+  athletes: [CreatePersonalProfileInput]
+
+  #
+  athletesIds: [String]
+}
+
+#
+type bulkEvent {
+  #
+  results: [Event]
+
+  #
+  errors: [String]
+}
+
+#
+input UpdateEventInput {
+  #
+  upComingLiveStream: String
+
+  #
+  liveStream: String
+
+  #
+  watchReplay: String
+
+  #
+  athletes: [UpdatePersonalProfileInput]
+
+  #
+  athletesIds: [String]
+}
+
+#
+input UpdateEventInputs {
+  #
+  id: String!
+
+  #
+  input: UpdateEventInput
+}
+
+#
+input CreateAthleteInput {
+  #
+  name: String
+
+  #
+  alias: String
+
+  #
+  dateOfBirth: Date
+
+  #
+  placeOfBirth: String
+
+  #
+  weight: Float
+
+  #
+  height: Int
+
+  #
+  stance: Int
+
+  #
+  fightWeight: Int
+
+  #
+  reach: Int
+
+  #
+  devision: String
+
+  #
+  athleteCategory: AthleteCategory
+
+  #
+  athleteStatus: AthleteStatus
+
+  #
+  slug: String
+
+  #
+  province: String
+
+  #
+  city: String
+
+  #
+  athleteEvents: [CreateAthleteEventInput]
+
+  #
+  athleteEventsIds: [String]
+}
+
+#
+input CreateAthleteEventInput {
+  #
+  livestreamId: String
+
+  #
+  athletes: [CreateAthleteInput]
+
+  #
+  athletesIds: [String]
+
+  #
+  time: Int
+
+  #
+  round: Int
+
+  #
+  method: Method
+
+  #
+  date: DateTime
+
+  #
+  location: String
+
+  #
+  winAthleteId: String
+
+  #
+  loseAthleteId: String
+}
+
+#
+type bulkAthlete {
+  #
+  results: [Athlete]
+
+  #
+  errors: [String]
+}
+
+#
+input UpdateAthleteInput {
+  #
+  name: String
+
+  #
+  alias: String
+
+  #
+  dateOfBirth: Date
+
+  #
+  placeOfBirth: String
+
+  #
+  weight: Float
+
+  #
+  height: Int
+
+  #
+  stance: Int
+
+  #
+  fightWeight: Int
+
+  #
+  reach: Int
+
+  #
+  devision: String
+
+  #
+  athleteCategory: AthleteCategory
+
+  #
+  athleteStatus: AthleteStatus
+
+  #
+  slug: String
+
+  #
+  province: String
+
+  #
+  city: String
+
+  #
+  athleteEvents: [UpdateAthleteEventInput]
+
+  #
+  athleteEventsIds: [String]
+}
+
+#
+input UpdateAthleteEventInput {
+  #
+  livestreamId: String
+
+  #
+  athletes: [UpdateAthleteInput]
+
+  #
+  athletesIds: [String]
+
+  #
+  time: Int
+
+  #
+  round: Int
+
+  #
+  method: Method
+
+  #
+  date: DateTime
+
+  #
+  location: String
+
+  #
+  winAthleteId: String
+
+  #
+  loseAthleteId: String
+}
+
+#
+input UpdateAthleteInputs {
+  #
+  id: String!
+
+  #
+  input: UpdateAthleteInput
+}
+
+#
+type bulkAthleteEvent {
+  #
+  results: [AthleteEvent]
+
+  #
+  errors: [String]
+}
+
+#
+input UpdateAthleteEventInputs {
+  #
+  id: String!
+
+  #
+  input: UpdateAthleteEventInput
+}
+
+#
+type Subscription {
+  #
+  default: String
+
+  #
+  subscribe(topic: String!): Subscribe
+
+  #
+  userAdded(where: UserFilter): User
+
+  #
+  usersAdded(where: UserFilter, or: [UserFilter]): [User]
+
+  #
+  userUpdated(where: UserFilter): User
+
+  #
+  usersUpdated(where: UserFilter, or: [UserFilter]): [User]
+
+  #
+  userDeleted(where: UserFilter): User
+
+  #
+  usersDeleted(where: UserFilter, or: [UserFilter]): [User]
+
+  #
+  livestreamAdded(where: LivestreamFilter): Livestream
+
+  #
+  livestreamsAdded(
+    where: LivestreamFilter
+    or: [LivestreamFilter]
+  ): [Livestream]
+
+  #
+  livestreamUpdated(where: LivestreamFilter): Livestream
+
+  #
+  livestreamsUpdated(
+    where: LivestreamFilter
+    or: [LivestreamFilter]
+  ): [Livestream]
+
+  #
+  livestreamDeleted(where: LivestreamFilter): Livestream
+
+  #
+  livestreamsDeleted(
+    where: LivestreamFilter
+    or: [LivestreamFilter]
+  ): [Livestream]
+
+  #
+  paymentAdded(where: PaymentFilter): Payment
+
+  #
+  paymentsAdded(where: PaymentFilter, or: [PaymentFilter]): [Payment]
+
+  #
+  paymentUpdated(where: PaymentFilter): Payment
+
+  #
+  paymentsUpdated(where: PaymentFilter, or: [PaymentFilter]): [Payment]
+
+  #
+  paymentDeleted(where: PaymentFilter): Payment
+
+  #
+  paymentsDeleted(where: PaymentFilter, or: [PaymentFilter]): [Payment]
+
+  #
+  purchaseAdded(where: PurchaseFilter): Purchase
+
+  #
+  purchasesAdded(where: PurchaseFilter, or: [PurchaseFilter]): [Purchase]
+
+  #
+  purchaseUpdated(where: PurchaseFilter): Purchase
+
+  #
+  purchasesUpdated(where: PurchaseFilter, or: [PurchaseFilter]): [Purchase]
+
+  #
+  purchaseDeleted(where: PurchaseFilter): Purchase
+
+  #
+  purchasesDeleted(where: PurchaseFilter, or: [PurchaseFilter]): [Purchase]
+
+  #
+  personalProfileAdded(where: PersonalProfileFilter): PersonalProfile
+
+  #
+  personalProfilesAdded(
+    where: PersonalProfileFilter
+    or: [PersonalProfileFilter]
+  ): [PersonalProfile]
+
+  #
+  personalProfileUpdated(where: PersonalProfileFilter): PersonalProfile
+
+  #
+  personalProfilesUpdated(
+    where: PersonalProfileFilter
+    or: [PersonalProfileFilter]
+  ): [PersonalProfile]
+
+  #
+  personalProfileDeleted(where: PersonalProfileFilter): PersonalProfile
+
+  #
+  personalProfilesDeleted(
+    where: PersonalProfileFilter
+    or: [PersonalProfileFilter]
+  ): [PersonalProfile]
+
+  #
+  eventAdded(where: EventFilter): Event
+
+  #
+  eventsAdded(where: EventFilter, or: [EventFilter]): [Event]
+
+  #
+  eventUpdated(where: EventFilter): Event
+
+  #
+  eventsUpdated(where: EventFilter, or: [EventFilter]): [Event]
+
+  #
+  eventDeleted(where: EventFilter): Event
+
+  #
+  eventsDeleted(where: EventFilter, or: [EventFilter]): [Event]
+
+  #
+  athleteAdded(where: AthleteFilter): Athlete
+
+  #
+  athletesAdded(where: AthleteFilter, or: [AthleteFilter]): [Athlete]
+
+  #
+  athleteUpdated(where: AthleteFilter): Athlete
+
+  #
+  athletesUpdated(where: AthleteFilter, or: [AthleteFilter]): [Athlete]
+
+  #
+  athleteDeleted(where: AthleteFilter): Athlete
+
+  #
+  athletesDeleted(where: AthleteFilter, or: [AthleteFilter]): [Athlete]
+
+  #
+  athleteEventAdded(where: AthleteEventFilter): AthleteEvent
+
+  #
+  athleteEventsAdded(
+    where: AthleteEventFilter
+    or: [AthleteEventFilter]
+  ): [AthleteEvent]
+
+  #
+  athleteEventUpdated(where: AthleteEventFilter): AthleteEvent
+
+  #
+  athleteEventsUpdated(
+    where: AthleteEventFilter
+    or: [AthleteEventFilter]
+  ): [AthleteEvent]
+
+  #
+  athleteEventDeleted(where: AthleteEventFilter): AthleteEvent
+
+  #
+  athleteEventsDeleted(
+    where: AthleteEventFilter
+    or: [AthleteEventFilter]
+  ): [AthleteEvent]
+}
+
+scalar Timestamp
+
+# A field whose value conforms to the standard currency format
+scalar Currency
+
+# A field whose value conforms to the standard rating format
+scalar Rating
+
+# A field whose value conforms to the standard percent format
+scalar Percent
+
+# A markdown field that can span multiple lines.
+scalar Markdown
+
+# A protected field that cannot be seen except admin.
+scalar Protected
+
+# A Formula field.
+scalar Formula
+
+#
+input SendEmailToTable {
+  #
+  from: String
+
+  #
+  fromName: String
+
+  #
+  subject: String!
+
+  #
+  title: String
+
+  #
+  body: String
+
+  #
+  html: String
+
+  #
+  emailImageHeader: String
+
+  #
+  emailLink: String
+
+  #
+  emailVerificationCode: String
+}
+
+#
+enum PushNotificationFilterOperator {
+  #
+  OR
+
+  #
+  AND
+}
+
+#
+type ForgetPassword {
+  #
+  token: String!
+}

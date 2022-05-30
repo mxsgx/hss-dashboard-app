@@ -223,7 +223,7 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
         </header>
         <main>
           <div className="flex flex-col space-y-4 px-4">
-            <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row justify-between items-center">
+            <div className="flex flex-col space-y-4 space-x-0 sm:space-x-4 sm:space-y-0 sm:flex-row justify-between items-center">
               <div>
                 <h3 className="text-xl font-medium text-stone-100 md:mb-2">
                   Ticket Purchased
@@ -233,7 +233,7 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
                 </p>
               </div>
               <form
-                className="flex flex-row items-center shadow-md"
+                className="flex flex-row items-center shadow-md w-full sm:w-auto"
                 onSubmit={handleSearch}
               >
                 <label

@@ -258,9 +258,15 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
                   pattern="^8([0-9]+)"
                   id="search"
                   min={8}
-                  className="bg-stone-700 text-stone-300 py-3 px-2 -ml-1 text-sm border w-full border-stone-700 outline-none rounded-r-md"
+                  className={[
+                    loading
+                      ? "bg-stone-800 text-stone-600"
+                      : "bg-stone-700 text-stone-300",
+                    "py-3 px-2 -ml-1 text-sm border w-full border-stone-700 outline-none rounded-r-md",
+                  ].join(" ")}
                   placeholder="8xxx"
                   value={search}
+                  disabled={loading}
                   onChange={handleSearchInput}
                 />
               </form>

@@ -92,24 +92,29 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
 
   useEffect(() => {
     (async function () {
+      setError(false);
       setLoading(true);
 
-      const { data: response, error: apolloError } =
-        await client.query<PurchasesResponse>({
-          query: GET_PURCHASES,
-          fetchPolicy: "cache-first",
-          variables: {
-            limit: limit,
-            skip: (page - 1) * limit,
-            livestreamId: process.env.NEXT_PUBLIC_LIVESTREAM_ID,
-            phoneNumber: `+62${phoneNumber}`,
-          },
-        });
+      try {
+        const { data: response, error: apolloError } =
+          await client.query<PurchasesResponse>({
+            query: GET_PURCHASES,
+            fetchPolicy: "cache-first",
+            variables: {
+              limit: limit,
+              skip: (page - 1) * limit,
+              livestreamId: process.env.NEXT_PUBLIC_LIVESTREAM_ID,
+              phoneNumber: `+62${phoneNumber}`,
+            },
+          });
 
-      if (apolloError) {
+        if (apolloError) {
+          setError(true);
+        } else {
+          setPurchases(response.purchases);
+        }
+      } catch (e) {
         setError(true);
-      } else {
-        setPurchases(response.purchases);
       }
 
       setLoading(false);
@@ -148,24 +153,30 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
   };
 
   const handleRefresh = async () => {
+    setError(false);
     setLoading(true);
 
-    const { data: response, error: apolloError } =
-      await client.query<PurchasesResponse>({
-        query: GET_PURCHASES,
-        fetchPolicy: "no-cache",
-        variables: {
-          limit: limit,
-          skip: (page - 1) * limit,
-          livestreamId: process.env.NEXT_PUBLIC_LIVESTREAM_ID,
-          phoneNumber: `+62${phoneNumber}`,
-        },
-      });
+    try {
+      const { data: response, error: apolloError } =
+        await client.query<PurchasesResponse>({
+          query: GET_PURCHASES,
+          fetchPolicy: "no-cache",
+          variables: {
+            limit: limit,
+            skip: (page - 1) * limit,
+            livestreamId: process.env.NEXT_PUBLIC_LIVESTREAM_ID,
+            phoneNumber: `+62${phoneNumber}`,
+          },
+        });
 
-    if (apolloError) {
+      if (apolloError) {
+        setError(true);
+      } else {
+        setPurchases(response.purchases);
+      }
+    } catch (e) {
+      console.log(e);
       setError(true);
-    } else {
-      setPurchases(response.purchases);
     }
 
     setLoading(false);

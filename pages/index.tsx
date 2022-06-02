@@ -355,7 +355,7 @@ const Home: NextPage<HomeProps> = ({ user }: HomeProps) => {
                           </td>
                           <td className="px-6 py-4 font-mono text-right">
                             {moment(value.purchasedAt).format(
-                              "dddd, D-MM-YYYY \\a\\t HH:mm"
+                              "dddd, DD-MM-YYYY \\a\\t HH:mm"
                             )}
                           </td>
                         </tr>

@@ -79,6 +79,10 @@ const Login: NextPage = () => {
           icon: "error",
           title: message,
           showConfirmButton: false,
+          customClass: {
+            popup:
+              "!bg-stone-700 !border !border-solid !border-stone-600 !text-stone-300",
+          },
         });
 
         setSubmitText("Login");
